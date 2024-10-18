@@ -1,15 +1,18 @@
+import webbrowser 
+
 class Books: #create books class
-    def __init__(self, title, author, pages):
+    def __init__(self, title, author, pages,link):
         self.title = title
         self.author = author
         self.pages = pages
         self.read = False
         self.owned = False
+        self.link = link
 
 # book options
-b1 = Books("Ender's Game", "Orson Scott Card", 256)
-b2 = Books("Ready Player One", "Ernest Cline", 348)
-b3 = Books("The Hobbit", "J.R.R. Tolkien", 310)
+b1 = Books("The President's Daughter", "Nan Britton", 439,"https://www.gutenberg.org/cache/epub/74595/pg74595-images.html")
+b2 = Books("The baseball boys of Lakeport", "Edward Stratemeyer", 315,"https://www.gutenberg.org/cache/epub/74593/pg74593-images.html")
+b3 = Books("The boys of Columbia High on the ice", "Grahm B Forbes", 272,"https://www.gutenberg.org/cache/epub/74588/pg74588-images.html")
 
 #create lists
 availableList = [b1, b2, b3]
@@ -51,18 +54,24 @@ def mainMenu(available, purchased, read):
             updateLists(available, purchased, read)
 
         elif inp == "2": #if input is purchased books
-            print("\nPurchased Books:")
-            for i, book in enumerate(purchased):
-                description(book)
-            purchMenu(purchased)
-            updateLists(available, purchased, read)
+            if len(purchased) >= 1:
+                print("\nPurchased Books:")
+                for i, book in enumerate(purchased):
+                    description(book)
+                purchMenu(purchased)
+                updateLists(available, purchased, read)
+            else:
+                print("No books purchased")
 
         elif inp == "3": #if input is read books
-            print("\nBooks Read:")
-            for book in read:
-                description(book)
-            readMenu(readList)
-            updateLists(available, purchased, read)
+            if len(read) >= 1:
+                print("\nBooks Read:")
+                for book in read:
+                    description(book)
+                readMenu(readList)
+                updateLists(available, purchased, read)
+            else:
+                print("No books read")
 
         elif inp == "4": #exit application
             break
@@ -97,6 +106,7 @@ def purchMenu(purch): #menu if purchased is chosen
                 mark_as_read(purch[selected_index])
             elif inp2 == "2":
                 print(f"Opening {purch[selected_index].title}...")
+                webbrowser.open_new(purch[selected_index].link)
             elif inp2 == "3":
                 print("Returning to Menu")
         else:
@@ -115,6 +125,7 @@ def readMenu(read):
             inp2 = input("Choose an option: ")
             if inp2 == "1":
                 print(f"Opening {read[selected_index].title}...")
+                webbrowser.open_new(read[selected_index].link)
             elif inp2 == "2":
                 read[selected_index].read = False
             elif inp2 == "3":
