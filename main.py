@@ -71,7 +71,7 @@ def mainMenu(available, purchased, read):
                 readMenu(readList)
                 updateLists(available, purchased, read)
             else:
-                print("No books read")  
+                print("No books read")
 
         elif inp == "4": #exit application
             break
